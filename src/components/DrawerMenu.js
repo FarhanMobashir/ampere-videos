@@ -42,7 +42,7 @@ export const DrawerMenu = ({ onClick }) => {
           background: "white",
           height: "100vh",
           top: "0",
-          "-webkit-tap-highlight-color": "transparent",
+          WebkitTapHighlightColor: "transparent",
           zIndex: "999",
         }}
       >

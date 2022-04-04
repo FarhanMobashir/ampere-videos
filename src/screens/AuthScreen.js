@@ -1,3 +1,9 @@
+import React from "react";
+import { ActiveUser } from "../components/ActiveUser";
+import { AuthForm } from "../components/AuthForm";
+import { AuthContext } from "../contexts/AuthContext";
+
 export const AuthScreen = () => {
-    return <h1>Auth Screen</h1>
-}
+  const { isAuthenticated } = React.useContext(AuthContext);
+  return isAuthenticated() ? <ActiveUser /> : <AuthForm />;
+};
