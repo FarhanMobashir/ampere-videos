@@ -20,7 +20,7 @@ export const AuthForm = () => {
 
   const guestLoginCredential = {
     email: "adarshbalika@gmail.com",
-    password: "adarshbalika",
+    password: "adarshBalika123",
   };
 
   function signupValidation(password, confirmPassword, name) {
@@ -71,10 +71,13 @@ export const AuthForm = () => {
   }
 
   function guestLogin(e) {
-    axios.post("/api/auth/login", guestLoginCredential).then((res) => {
-      login(res.data.encodedToken);
-      navigate("/");
-    });
+    axios
+      .post("/api/auth/login", guestLoginCredential)
+      .then((res) => {
+        login(res.data.encodedToken);
+        navigate("/");
+      })
+      .catch((err) => console.log(err));
   }
 
   return (

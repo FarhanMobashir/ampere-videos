@@ -251,3 +251,10 @@
   flex-basis: 49%;
   margin: 0 1rem;
 }
+
+/* video cards */
+@media (max-width: 600px) {
+  .container-lg {
+    width: 100%;
+  }
+}

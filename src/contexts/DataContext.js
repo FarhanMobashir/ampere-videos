@@ -1,24 +1,26 @@
 import { useThunkReducer } from "../hooks/useThunkReducer";
 import produce from "immer";
 import React from "react";
+import { apiActionTypes } from "./ApiContext";
 
 const initialState = {
-  products: [],
-  productForUi: [],
-  cart: [],
+  videos: [],
   categories: [],
-  wishlist: [],
   activeCategories: [],
+  watchHistory: [],
+  watchLater: [],
+  playlists: [],
+  singlePlaylist: [],
+  likedVideos: [],
 };
 
 const reducer = produce((state = initialState, action) => {
-  //* products actions
-  if (action.type === "allProducts") {
-    state.products = action.payload.products;
-    state.productForUi = action.payload.products;
+  //* videos actions
+  if (action.type === apiActionTypes.getAllVideos) {
+    state.products = action.payload.videos;
   }
   // * categories actions
-  if (action.type === "allCategories") {
+  if (action.type === apiActionTypes.getAllCategories) {
     state.categories = action.payload.categories;
     state.activeCategories = new Array(action.payload.categories.length).fill(
       false
@@ -37,32 +39,72 @@ const reducer = produce((state = initialState, action) => {
     );
   }
 
-  // * wishlist actions
-  if (action.type === "getWishlist") {
-    state.wishlist = action.payload.wishlist;
+  // * likes actions
+  if (action.type === apiActionTypes.getLikes) {
+    state.likedVideos = action.payload.likes;
   }
 
-  if (action.type === "addToWishlist") {
-    state.wishlist = action.payload.wishlist;
+  if (action.type === apiActionTypes.updateLikes) {
+    state.likedVideos = action.payload.likes;
   }
 
-  if (action.type === "deleteFromWishlist") {
-    state.wishlist = action.payload.wishlist;
-  }
-  // * cart actions
-  if (action.type === "getCart") {
-    state.cart = action.payload.cart;
+  if (action.type === apiActionTypes.deleteLikes) {
+    state.likedVideos = action.payload.likes;
   }
 
-  if (action.type === "addToCart") {
-    state.cart = action.payload.cart;
+  // * watch later actions
+  if (action.type === apiActionTypes.getWatchLater) {
+    state.watchLater = action.payload.watchlater;
   }
 
-  if (action.type === "deleteFromCart") {
-    state.cart = action.payload.cart;
+  if (action.type === apiActionTypes.updateWatchLater) {
+    state.watchLater = action.payload.watchlater;
   }
-  if (action.type === "updateCart") {
-    state.cart = action.payload.cart;
+
+  if (action.type === apiActionTypes.deleteWatchLater) {
+    state.watchLater = action.payload.watchlater;
+  }
+
+  // * history actions
+  if (action.type === apiActionTypes.getWatchHistory) {
+    state.watchHistory = action.payload.history;
+  }
+
+  if (action.type === apiActionTypes.updateWatchHistory) {
+    state.watchHistory = action.payload.history;
+  }
+
+  if (action.type === apiActionTypes.deleteWatchHistory) {
+    state.watchHistory = action.payload.history;
+  }
+
+  if (action.type === apiActionTypes.deleteAllWatchHistory) {
+    state.watchHistory = action.payload.history;
+  }
+
+  // * playlist actions
+
+  if (action.type === apiActionTypes.getAllPlaylist) {
+    state.playlists = action.payload.playlists;
+  }
+
+  if (action.type === apiActionTypes.updatePlaylist) {
+    state.playlists = action.payload.playlists;
+  }
+
+  if (action.type === apiActionTypes.deletePlaylist) {
+    state.playlists = action.payload.playlists;
+  }
+
+  if (action.type === apiActionTypes.getSinglePlaylist) {
+    state.singlePlaylist = action.payload.playlist;
+  }
+
+  if (action.type === apiActionTypes.updateSinglePlaylist) {
+    state.singlePlaylist = action.payload.playlist;
+  }
+  if (action.type === apiActionTypes.deleteFromSinglePlaylist) {
+    state.singlePlaylist = action.payload.playlist;
   }
 
   // * clear state

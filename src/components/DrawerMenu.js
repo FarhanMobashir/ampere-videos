@@ -3,6 +3,11 @@ import { CustomedNavLink } from "./CustomNavlink";
 
 const NavigationRoutes = [
   {
+    title: "Explore",
+    route: "/videos",
+    icon: "video",
+  },
+  {
     title: "Your Playlists",
     route: "/user/playlist",
     icon: "list-ul",

@@ -10,32 +10,48 @@ import { VideoPlayerScreen } from "./screens/VideoPlayerScreen";
 import { SinglePlaylistScreen } from "./screens/SinglePlaylistScreen";
 import { AppLayout } from "./components/AppLayout";
 import { AuthProvider } from "./contexts/AuthContext";
+import { PrivateRoute } from "./components/PrivateRoute";
+import { DataProvider } from "./contexts/DataContext";
+import { ApiProvider } from "./contexts/ApiContext";
 
 function App() {
   return (
-    <AuthProvider>
-      <Routes>
-        {/* public routes  */}
-        <Route path="/" element={<AppLayout />}>
-          <Route path="*" exact element={<h1>404 not found</h1>} />
-          <Route path="/" element={<HomeScreen />} />
-          <Route path="/mock" element={<Mockman />} />
-          <Route path="/auth" element={<AuthScreen />} />
-          <Route path="/videos" element={<VideoListingScreen />} />
-          <Route path="/videos/:videoid" element={<VideoPlayerScreen />} />
-          {/* private routes  */}
-          <Route path="/user">
-            <Route path="/user/history" element={<WatchHistoryScreen />} />
-            <Route path="/user/playlist" element={<PlaylistListingScreen />} />
-            <Route
-              path="/user/playlist/:playlistid"
-              element={<SinglePlaylistScreen />}
-            />
-            <Route path="/user/watch-later" element={<WatchLaterScreen />} />
-          </Route>
-        </Route>
-      </Routes>
-    </AuthProvider>
+    <DataProvider>
+      <AuthProvider>
+        <ApiProvider>
+          <Routes>
+            {/* public routes  */}
+            <Route path="/" element={<AppLayout />}>
+              <Route path="*" exact element={<h1>404 not found</h1>} />
+              <Route path="/" element={<HomeScreen />} />
+              <Route path="/mock" element={<Mockman />} />
+              <Route path="/auth" element={<AuthScreen />} />
+              <Route path="/videos" element={<VideoListingScreen />} />
+              <Route path="/videos/:videoid" element={<VideoPlayerScreen />} />
+              {/* private routes  */}
+              <Route path="/user">
+                <Route
+                  path="/user/history"
+                  element={<PrivateRoute element={<WatchHistoryScreen />} />}
+                />
+                <Route
+                  path="/user/playlist"
+                  element={<PrivateRoute element={<PlaylistListingScreen />} />}
+                />
+                <Route
+                  path="/user/playlist/:playlistid"
+                  element={<PrivateRoute element={<SinglePlaylistScreen />} />}
+                />
+                <Route
+                  path="/user/watch-later"
+                  element={<PrivateRoute element={<WatchLaterScreen />} />}
+                />
+              </Route>
+            </Route>
+          </Routes>
+        </ApiProvider>
+      </AuthProvider>
+    </DataProvider>
   );
 }
 

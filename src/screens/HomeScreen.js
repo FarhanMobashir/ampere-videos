@@ -23,7 +23,7 @@ export const HomeScreen = () => {
         <div className="offer-container">
           {[1, 2, 3, 4].map((item, idx) => {
             return (
-              <Link key={item._id} to="/videos">
+              <Link key={item} to="/videos">
                 <RoundImageCard
                   key={item.id}
                   imageUrl="https://via.placeholder.com/150"
