@@ -3,7 +3,9 @@ import logo from "../assets/logo.svg";
 import logoMobile from "../assets/logo-mobile.svg";
 import { DrawerMenu } from "./DrawerMenu";
 import { Link } from "react-router-dom";
+import { useData } from "../contexts/DataContext";
 export const AppHeader = () => {
+  const { state: globalState } = useData();
   const [showDrawer, setShowDrawer] = React.useState(false);
   return (
     <div
@@ -12,6 +14,7 @@ export const AppHeader = () => {
         position: "sticky",
         top: "0",
         background: "white",
+        boxShadow: "0px 0px 5px grey",
       }}
     >
       <div className="upper-container">
@@ -57,15 +60,15 @@ export const AppHeader = () => {
         </div>
 
         <div className="nav-icon-container">
-          <a href="#">
+          <Link to="/user/history">
             <div className="badge-container">
               <i className="badge-icon uil uil-history"></i>
-              <i className="badge">5</i>
+              <i className="badge">{globalState.watchHistory.length}</i>
             </div>
-          </a>
-          <a href="#">
+          </Link>
+          <Link to="/auth">
             <i className="badge-icon uil uil-user-circle"></i>
-          </a>
+          </Link>
         </div>
       </div>
       <div className="search-container-small">

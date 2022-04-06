@@ -17,7 +17,7 @@ const initialState = {
 const reducer = produce((state = initialState, action) => {
   //* videos actions
   if (action.type === apiActionTypes.getAllVideos) {
-    state.products = action.payload.videos;
+    state.videos = action.payload.videos;
   }
   // * categories actions
   if (action.type === apiActionTypes.getAllCategories) {

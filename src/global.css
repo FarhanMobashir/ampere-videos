@@ -252,9 +252,68 @@
   margin: 0 1rem;
 }
 
-/* video cards */
+/* video listing section */
+
+.video-listing-container {
+  display: flex;
+  gap: 1rem;
+  margin: 1rem;
+  flex-wrap: wrap;
+}
+
+.pill-bordered {
+  border: 2px solid var(--black-500);
+}
+.video-screen-container {
+  margin: 1rem 2rem;
+}
+
+.container-lg {
+  width: 28rem;
+}
+
 @media (max-width: 600px) {
   .container-lg {
     width: 100%;
   }
+  .video-listing-container {
+    flex-direction: column;
+  }
+}
+
+/* video player */
+.card-container-player {
+  width: 100%;
+  box-shadow: none;
+  border-bottom: 2px solid var(--black-200);
+  border-radius: 0;
+}
+
+.video-player-screen-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* similar video card */
+.similar-video-card {
+  width: 100%;
+}
+
+/* similar video container */
+.similar-video-container {
+  display: flex;
+  flex-direction: column;
+  margin: 2rem 1rem;
+  gap: 1rem;
+}
+
+/* horizontal video card */
+.card-img-horizontal {
+  /* width: 50%; */
+}
+
+/* extra css */
+.pointer {
+  cursor: pointer;
 }
