@@ -8,20 +8,26 @@ import { v4 as uuid } from "uuid";
 export const categories = [
   {
     _id: uuid(),
-    categoryName: "Computer Programming",
+    categoryName: "Indie Folk",
     description:
-      "Computer programming is the process of designing and building an executable computer program to accomplish a specific computing",
+      "Indie folk is a music genre that arose in the 1990s among musicians from indie rock scenes influenced by folk music. Indie folk hybridizes the acoustic guitar melodies of traditional folk music with contemporary instrumentation.",
   },
   {
     _id: uuid(),
-    categoryName: "Frontend Development",
+    categoryName: "Acoustic",
     description:
-      "Front-end web development, also known as client-side development is the practice of producing HTML, CSS and JavaScript for a website or Web Application",
+      "Acoustic music is music that solely or primarily uses instruments that produce sound through acoustic means, as opposed to electric or electronic means.",
   },
   {
     _id: uuid(),
-    categoryName: "Backend Development",
+    categoryName: "Classical Indian",
     description:
-      "Backend Development is also known as server-side development. It is everything that the users don't see and contains behind-the-scenes activities that occur when performing any action on a website.",
+      "Classical Indian music is a genre of South Asian music, the other being film, various varieties of pop, regional folk, religious and devotional music. In Indian classical music, the raga and the tala are two foundational elements. The raga forms the fabric of a melodic structure, and the tala keeps the time cycle.",
+  },
+  {
+    _id: uuid(),
+    categoryName: "Motivational",
+    description:
+      "Uplifting music is motivational, elevating, and inspiring. It is hopeful because it can help to bring people together or out of a bad mood. ",
   },
 ];

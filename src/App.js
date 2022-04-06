@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import { AuthScreen } from "./screens/AuthScreen";
 import { HomeScreen } from "./screens/HomeScreen";
-import Mockman from "mockman-js"
+import Mockman from "mockman-js";
 import { VideoListingScreen } from "./screens/VideoListingScreen";
 import { WatchHistoryScreen } from "./screens/WatchHistoryScreen";
 import { PlaylistListingScreen } from "./screens/PlaylistListingScreen";
@@ -9,53 +9,49 @@ import { WatchLaterScreen } from "./screens/WatchLaterScreen";
 import { VideoPlayerScreen } from "./screens/VideoPlayerScreen";
 import { SinglePlaylistScreen } from "./screens/SinglePlaylistScreen";
 import { AppLayout } from "./components/AppLayout";
+import { AuthProvider } from "./contexts/AuthContext";
+import { PrivateRoute } from "./components/PrivateRoute";
+import { DataProvider } from "./contexts/DataContext";
+import { ApiProvider } from "./contexts/ApiContext";
 
 function App() {
   return (
-    <Routes>
+    <DataProvider>
+      <AuthProvider>
+        <ApiProvider>
+          <Routes>
             {/* public routes  */}
             <Route path="/" element={<AppLayout />}>
-              <Route
-                path="*"
-                exact
-                element={
-                 <h1>404 not found</h1>
-                }
-              />
+              <Route path="*" exact element={<h1>404 not found</h1>} />
               <Route path="/" element={<HomeScreen />} />
               <Route path="/mock" element={<Mockman />} />
-              <Route path="/auth" element={<AuthScreen/>} />
+              <Route path="/auth" element={<AuthScreen />} />
               <Route path="/videos" element={<VideoListingScreen />} />
-                <Route path="/videos/:videoid" element={<VideoPlayerScreen />} />
+              <Route path="/videos/:videoid" element={<VideoPlayerScreen />} />
               {/* private routes  */}
               <Route path="/user">
                 <Route
                   path="/user/history"
-                  element={
-                    <WatchHistoryScreen/>
-                  }
+                  element={<PrivateRoute element={<WatchHistoryScreen />} />}
                 />
                 <Route
                   path="/user/playlist"
-                  element={
-                   <PlaylistListingScreen/>
-                  }
+                  element={<PrivateRoute element={<PlaylistListingScreen />} />}
                 />
                 <Route
                   path="/user/playlist/:playlistid"
-                  element={
-                   <SinglePlaylistScreen/>
-                  }
+                  element={<PrivateRoute element={<SinglePlaylistScreen />} />}
                 />
-                 <Route
+                <Route
                   path="/user/watch-later"
-                  element={
-                   <WatchLaterScreen/>
-                  }
+                  element={<PrivateRoute element={<WatchLaterScreen />} />}
                 />
               </Route>
             </Route>
           </Routes>
+        </ApiProvider>
+      </AuthProvider>
+    </DataProvider>
   );
 }
 

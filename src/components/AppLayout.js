@@ -1,17 +1,13 @@
-import { Outlet } from "react-router-dom"
-
-export const Header = () => {
-    return <h1>This is Header</h1>
-}
-
-export const Footer = () => {
-    return <h1>This is Header</h1>
-}
+import { Outlet } from "react-router-dom";
+import { AppFooter } from "./AppFooter";
+import { AppHeader } from "./AppHeader";
 
 export const AppLayout = () => {
-    return <>
-    <Header/>
-    <Outlet/>
-    <Footer/>
+  return (
+    <>
+      <AppHeader />
+      <Outlet />
+      <AppFooter />
     </>
-}
+  );
+};
