@@ -1,4 +1,12 @@
-export const Youtube = ({ videoId, title, creator, description }) => {
+export const Youtube = ({
+  videoId,
+  title,
+  creator,
+  description,
+  onLike,
+  onSave,
+  onCreatePlaylist,
+}) => {
   return (
     <div className="video-player-container">
       <div className="card-container card-container-player">
@@ -17,9 +25,12 @@ export const Youtube = ({ videoId, title, creator, description }) => {
           <div className="bottom-container">
             <h2 className="card-subheading tx-14">{creator}</h2>
             <div className="icon-container">
-              <i className="uil uil-thumbs-up card-icon"></i>
-              <i className="uil uil-bookmark card-icon"></i>
-              <i className="uil uil-create-dashboard card-icon"></i>
+              <i className="uil uil-thumbs-up card-icon" onClick={onLike}></i>
+              <i className="uil uil-bookmark card-icon" onClick={onSave}></i>
+              <i
+                className="uil uil-create-dashboard card-icon"
+                onClick={onCreatePlaylist}
+              ></i>
             </div>
           </div>
         </div>

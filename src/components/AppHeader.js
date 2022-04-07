@@ -36,20 +36,7 @@ export const AppHeader = () => {
             <img className="h4 logo logo-size" src={logo} />
           </Link>
         </div>
-        {/* <div className="navigation-link-container">
-          <a className="navigation-link" href="#">
-            Motors
-          </a>
-          <a className="navigation-link" href="#">
-            Propellor
-          </a>
-          <a className="navigation-link" href="#">
-            Reciever
-          </a>
-          <a className="navigation-link" href="#">
-            Battery
-          </a>
-        </div> */}
+
         <div className="search-container-big">
           <i className="search-icon uil uil-search"></i>
           <input
@@ -60,10 +47,10 @@ export const AppHeader = () => {
         </div>
 
         <div className="nav-icon-container">
-          <Link to="/user/history">
+          <Link to="/user/likes">
             <div className="badge-container">
-              <i className="badge-icon uil uil-history"></i>
-              <i className="badge">{globalState.watchHistory.length}</i>
+              <i className="badge-icon uil uil-thumbs-up"></i>
+              <i className="badge">{globalState.likedVideos.length}</i>
             </div>
           </Link>
           <Link to="/auth">

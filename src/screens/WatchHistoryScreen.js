@@ -1,18 +1,25 @@
 import { Link, useNavigate } from "react-router-dom";
-import { VideoCard } from "../components/VideoCard";
-import { VideoCardForHistory } from "../components/VideoCardForHistory";
+import { EmptyState } from "../components/EmptyState";
+import { VideoCardWithDelete } from "../components/VideoCardWithDelete";
 import { useApi } from "../contexts/ApiContext";
 import { useAuth } from "../contexts/AuthContext";
 import { useData } from "../contexts/DataContext";
+import emptyImage from "../assets/shoppingcart.png";
 
 export const WatchHistoryScreen = () => {
   const navigate = useNavigate();
   const { state: globalState } = useData();
-  const { usegetWatchHistory, usedeleteWatchHistory } = useApi();
+  const {
+    usegetWatchHistory,
+    usedeleteWatchHistory,
+    usedeleteAllWatchHistory,
+  } = useApi();
   const { isAuthenticated } = useAuth();
   const { loading, data } = usegetWatchHistory();
   const [deleteFromHistory, { loading: isDeletingFromHistory }] =
     usedeleteWatchHistory();
+  const [clearWatchHistory, { loading: isClearingHistory }] =
+    usedeleteAllWatchHistory();
   const showTitle = (title) => {
     if (title.length <= 40) {
       return title;
@@ -21,25 +28,36 @@ export const WatchHistoryScreen = () => {
     }
   };
 
-  //   const removeFromHistoryHandler = (item) => {
-  //     if (isAuthenticated()) {
-  //       addToHistory({ item });
-  //     } else {
-  //       return;
-  //     }
-  //   };
+  if (globalState.watchHistory.length === 0) {
+    return (
+      <div className="m-20 ">
+        <EmptyState
+          imageUrl={emptyImage}
+          title="Watch history is empty"
+          description="Try Exploring our handpicked song just for you"
+          buttonText="Explore Now"
+          onButtonClick={() => navigate("/videos")}
+        />
+      </div>
+    );
+  }
   return (
     <div className="video-screen-container">
       <div className="pill-container">
         <h1 className="h3">Watch History</h1>
-        <small className="pill grey pill-bordered">Clear All</small>
+        <small
+          className="pill grey pill-bordered pointer"
+          onClick={() => clearWatchHistory()}
+        >
+          Clear All
+        </small>
       </div>
       <div className="video-listing-container">
         {!loading &&
           data &&
           globalState.watchHistory.map((item) => {
             return (
-              <VideoCardForHistory
+              <VideoCardWithDelete
                 key={item._id}
                 onClick={() =>
                   navigate(`/videos/${item._id}`, {

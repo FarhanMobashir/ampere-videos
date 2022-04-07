@@ -1,8 +1,11 @@
+import { Link } from "react-router-dom";
+
 export const HorizontalVideoCard = ({
   videoId,
   title,
   creator,
   description,
+  onClick,
 }) => {
   return (
     <div className="card-container-horizontal similar-video-card">
@@ -10,6 +13,7 @@ export const HorizontalVideoCard = ({
         className="card-img card-img-horizontal"
         src={`http://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
         alt=""
+        onClick={onClick}
       />
       <div className="content-container pd-10">
         <h2 className="card-title tx-20">{title}</h2>

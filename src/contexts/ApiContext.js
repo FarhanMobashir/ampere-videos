@@ -93,7 +93,7 @@ export const ApiProvider = ({ children }) => {
       },
       // * watch later actions
       {
-        name: apiActionTypes.getWatchlater,
+        name: apiActionTypes.getWatchLater,
         query: "/user/watchlater",
         type: "query",
         method: "GET",
