@@ -1,4 +1,4 @@
-export const VideoCardForHistory = ({
+export const VideoCardWithDelete = ({
   videoId,
   title,
   creator,

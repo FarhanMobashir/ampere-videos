@@ -13,6 +13,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import { PrivateRoute } from "./components/PrivateRoute";
 import { DataProvider } from "./contexts/DataContext";
 import { ApiProvider } from "./contexts/ApiContext";
+import { LikedVideoScreen } from "./screens/LikedVideoScreen";
 
 function App() {
   return (
@@ -45,6 +46,10 @@ function App() {
                 <Route
                   path="/user/watch-later"
                   element={<PrivateRoute element={<WatchLaterScreen />} />}
+                />
+                <Route
+                  path="/user/likes"
+                  element={<PrivateRoute element={<LikedVideoScreen />} />}
                 />
               </Route>
             </Route>

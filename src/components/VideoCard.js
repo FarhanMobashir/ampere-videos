@@ -1,6 +1,14 @@
 // src={`http://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
 
-export const VideoCard = ({ videoId, title, creator, onClick }) => {
+export const VideoCard = ({
+  videoId,
+  title,
+  creator,
+  onClick,
+  onSave,
+  onCreatePlaylist,
+  isSaved,
+}) => {
   return (
     <div class="card-container container-lg">
       <img
@@ -16,8 +24,14 @@ export const VideoCard = ({ videoId, title, creator, onClick }) => {
           <h2 class="card-subheading tx-14">{creator}</h2>
           <div class="icon-container">
             {/* <i class="uil uil-thumbs-up card-icon"></i> */}
-            <i class="uil uil-bookmark card-icon"></i>
-            <i class="uil uil-create-dashboard card-icon"></i>
+            <i
+              class={`uil uil-bookmark card-icon ${isSaved ? "black-6" : null}`}
+              onClick={onSave}
+            ></i>
+            <i
+              class="uil uil-create-dashboard card-icon"
+              onClick={onCreatePlaylist}
+            ></i>
           </div>
         </div>
       </div>

@@ -6,15 +6,16 @@ import { useAuth } from "../contexts/AuthContext";
 import { useData } from "../contexts/DataContext";
 import emptyImage from "../assets/shoppingcart.png";
 
-export const WatchLaterScreen = () => {
+export const LikedVideoScreen = () => {
   const navigate = useNavigate();
   const { state: globalState } = useData();
-  const { usegetWatchLater, usedeleteWatchLater } = useApi();
+  const { usegetLikes, usedeleteLikes } = useApi();
   const { isAuthenticated } = useAuth();
-  const { loading: isLoadingWatchLater, data: watchLaterData } =
-    usegetWatchLater();
-  const [deleteFromWatchLater, { loading: isDeletingFromWatchLater }] =
-    usedeleteWatchLater();
+  const [deleteLikedVideos, { loading: isDeletingFromLikedVideos }] =
+    usedeleteLikes();
+  const { loading: isLoadingLikedVideos, data: likedVideosData } =
+    usegetLikes();
+
   const showTitle = (title) => {
     if (title.length <= 40) {
       return title;
@@ -23,13 +24,15 @@ export const WatchLaterScreen = () => {
     }
   };
 
-  if (globalState.watchLater.length === 0) {
+  console.log("state", globalState);
+
+  if (globalState.likedVideos.length === 0) {
     return (
       <div className="m-20 ">
         <EmptyState
           imageUrl={emptyImage}
-          title="Watch Later is empty"
-          description="Save the song you liked and see it here"
+          title="No Liked Videos Here"
+          description="Like the videos which you love to see them here"
           buttonText="Explore Now"
           onButtonClick={() => navigate("/videos")}
         />
@@ -39,12 +42,12 @@ export const WatchLaterScreen = () => {
   return (
     <div className="video-screen-container">
       <div className="pill-container">
-        <h1 className="h3">Watch Later</h1>
+        <h1 className="h3">Liked Videos</h1>
       </div>
       <div className="video-listing-container">
-        {!isLoadingWatchLater &&
-          watchLaterData &&
-          globalState.watchLater.map((item) => {
+        {!isLoadingLikedVideos &&
+          likedVideosData &&
+          globalState.likedVideos.map((item) => {
             return (
               <VideoCardWithDelete
                 key={item._id}
@@ -60,7 +63,7 @@ export const WatchLaterScreen = () => {
                 creator={item.creator}
                 onDelete={() => {
                   console.log("Helo");
-                  deleteFromWatchLater({}, item._id);
+                  deleteLikedVideos({}, item._id);
                 }}
               />
             );

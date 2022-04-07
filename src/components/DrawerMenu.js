@@ -13,6 +13,11 @@ const NavigationRoutes = [
     icon: "list-ul",
   },
   {
+    title: "Liked Videos",
+    route: "/user/likes",
+    icon: "thumbs-up",
+  },
+  {
     title: "Watch Later Videos",
     route: "/user/watch-later",
     icon: "hourglass",

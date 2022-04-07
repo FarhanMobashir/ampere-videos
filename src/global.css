@@ -313,6 +313,33 @@
   /* width: 50%; */
 }
 
+/* empty state css */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+  gap: 5px;
+  border: 2px dashed var(--black-100);
+  border-radius: 1rem;
+}
+
+.empty-state-image {
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+}
+
+.empty-state-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 /* extra css */
 .pointer {
   cursor: pointer;
