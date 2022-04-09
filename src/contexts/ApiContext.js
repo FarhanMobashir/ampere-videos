@@ -144,16 +144,17 @@ export const ApiProvider = ({ children }) => {
       },
       {
         name: apiActionTypes.updatePlaylist,
-        query: "/user/playlist",
+        query: "/user/playlists",
         type: "mutation",
         method: "POST",
       },
       {
         name: apiActionTypes.deletePlaylist,
-        query: "/user/playlist",
+        query: "/user/playlists",
         type: "mutation",
         method: "DELETE",
       },
+      // * for single playlist
       {
         name: apiActionTypes.getSinglePlaylist,
         query: "/user/playlists",
@@ -161,8 +162,14 @@ export const ApiProvider = ({ children }) => {
         method: "GET",
       },
       {
+        name: apiActionTypes.updateSinglePlaylist,
+        query: "/user/playlists",
+        type: "mutation",
+        method: "POST",
+      },
+      {
         name: apiActionTypes.deleteFromSinglePlaylist,
-        query: "/user/playlist",
+        query: "/user/playlists",
         type: "mutation",
         method: "DELETE",
       },

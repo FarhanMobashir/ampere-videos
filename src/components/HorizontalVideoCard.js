@@ -1,11 +1,12 @@
-import { Link } from "react-router-dom";
-
 export const HorizontalVideoCard = ({
   videoId,
   title,
   creator,
   description,
   onClick,
+  onSave,
+  onCreatePlaylist,
+  isSaved,
 }) => {
   return (
     <div className="card-container-horizontal similar-video-card">
@@ -21,8 +22,16 @@ export const HorizontalVideoCard = ({
         <p className="card-description">{description}</p>
         <div className="bottom-container">
           <div className="icon-container">
-            <i className="uil uil-bookmark card-icon"></i>
-            <i className="uil uil-create-dashboard card-icon"></i>
+            <i
+              className={`uil uil-bookmark card-icon-video-card ${
+                isSaved ? "card-icon-active-save" : ""
+              }`}
+              onClick={onSave}
+            ></i>
+            <i
+              className="uil uil-create-dashboard card-icon"
+              onClick={onCreatePlaylist}
+            ></i>
           </div>
         </div>
       </div>

@@ -6,6 +6,8 @@ export const Youtube = ({
   onLike,
   onSave,
   onCreatePlaylist,
+  isLiked,
+  isSaved,
 }) => {
   return (
     <div className="video-player-container">
@@ -25,10 +27,20 @@ export const Youtube = ({
           <div className="bottom-container">
             <h2 className="card-subheading tx-14">{creator}</h2>
             <div className="icon-container">
-              <i className="uil uil-thumbs-up card-icon" onClick={onLike}></i>
-              <i className="uil uil-bookmark card-icon" onClick={onSave}></i>
               <i
-                className="uil uil-create-dashboard card-icon"
+                className={`uil uil-thumbs-up card-icon-video-player ${
+                  isLiked ? "card-icon-active-like" : ""
+                }`}
+                onClick={onLike}
+              ></i>
+              <i
+                className={`uil uil-bookmark card-icon-video-player ${
+                  isSaved ? "card-icon-active-save" : ""
+                }`}
+                onClick={onSave}
+              ></i>
+              <i
+                className="uil uil-create-dashboard card-icon-video-player"
                 onClick={onCreatePlaylist}
               ></i>
             </div>

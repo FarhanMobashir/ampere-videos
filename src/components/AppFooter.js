@@ -3,21 +3,15 @@ export const AppFooter = () => {
     <footer className="footer">
       {/* <!-- first column --> */}
       <div className="footer-columns">
-        <h4 className="footer-heading">Minion Talk</h4>
+        <h4 className="footer-heading">Ampere Videos</h4>
         <small className="footer-subheading">
-          Made with love and javascript
+          Made with ReactJs and Mockbee
         </small>
         <a
           className="footer-link"
-          href="https://github.com/FarhanMobashir/minions-talk"
+          href="https://github.com/FarhanMobashir/ampere-shop-react"
         >
           Source code
-        </a>
-        <a
-          className="footer-link"
-          href="https://www.youtube.com/watch?v=yLZazznWoAs&list=PLzvhQUIpvvuj5KPnyPyWsvgyzNkX_ACPA&index=6"
-        >
-          Learn to make your own
         </a>
       </div>
       {/* <!-- second column --> */}
@@ -41,14 +35,6 @@ export const AppFooter = () => {
         >
           LinkedIn
         </a>
-      </div>
-      {/* <!-- third column --> */}
-      <div className="footer-columns">
-        <h4 className="footer-heading">API Used</h4>
-        <small className="footer-subheading">
-          Funtranslation minion api
-          <a href="https://funtranslations.com/api/minions">link Here</a>
-        </small>
       </div>
     </footer>
   );

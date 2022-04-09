@@ -12,6 +12,8 @@ const initialState = {
   playlists: [],
   singlePlaylist: [],
   likedVideos: [],
+  activeCategories: [],
+  activePlaylist: [],
 };
 
 const reducer = produce((state = initialState, action) => {
@@ -86,10 +88,16 @@ const reducer = produce((state = initialState, action) => {
 
   if (action.type === apiActionTypes.getAllPlaylist) {
     state.playlists = action.payload.playlists;
+    state.activePlaylist = new Array(action.payload.playlists.length).fill(
+      true
+    );
   }
 
   if (action.type === apiActionTypes.updatePlaylist) {
     state.playlists = action.payload.playlists;
+    state.activePlaylist = new Array(action.payload.playlists.length).fill(
+      true
+    );
   }
 
   if (action.type === apiActionTypes.deletePlaylist) {
@@ -102,9 +110,15 @@ const reducer = produce((state = initialState, action) => {
 
   if (action.type === apiActionTypes.updateSinglePlaylist) {
     state.singlePlaylist = action.payload.playlist;
+    state.playlists = state.playlists.map((item) =>
+      item._id === action.payload.playlist._id ? action.payload.playlist : item
+    );
   }
   if (action.type === apiActionTypes.deleteFromSinglePlaylist) {
     state.singlePlaylist = action.payload.playlist;
+    state.playlists = state.playlists.map((item) =>
+      item._id === action.payload.playlist._id ? action.payload.playlist : item
+    );
   }
 
   // * clear state

@@ -1,29 +1,50 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { VideoCard } from "../components/VideoCard";
 import { useApi } from "../contexts/ApiContext";
 import { useAuth } from "../contexts/AuthContext";
 import { checkDb } from "../helpers/helperFuntions";
 import React from "react";
 import { useData } from "../contexts/DataContext";
+import { PlaylistModal } from "../components/PlaylistModal";
+import { BasicDialogue } from "../components/BasicDialogue";
 
 export const VideoListingScreen = () => {
   const {
     usegetAllVideos,
+    usegetAllCategories,
     useupdateWatchHistory,
     useupdateWatchLater,
     usedeleteWatchLater,
   } = useApi();
   const navigate = useNavigate();
+  const location = useLocation();
+
   const { isAuthenticated } = useAuth();
-  const { state: globalState } = useData();
-  const { loading, data } = usegetAllVideos();
+  const { state: globalState, dispatch: globalDispatch } = useData();
+  const { loading: isLoadingAllVideos, data: allVideosData } =
+    usegetAllVideos();
+  const { loading: isLoadingCategories, data: categoriesData } =
+    usegetAllCategories();
   const [addToHistory, { loading: addingToHistory }] = useupdateWatchHistory();
   const [addToWatchLater, { loading: addingToWatchLater }] =
     useupdateWatchLater();
   const [deleteFromWatchLater, { loading: deletingFromWatchLater }] =
     usedeleteWatchLater();
 
-  const [selectedProduct, setSelectedProduct] = React.useState(null);
+  const [selectedVideo, setSelectedVideo] = React.useState(null);
+  const [showModal, setShowModal] = React.useState(false);
+  const [showDialogue, setShowDialogue] = React.useState(false);
+
+  React.useEffect(() => {
+    if (!isLoadingAllVideos && !isLoadingCategories) {
+      if (location.state) {
+        globalDispatch({
+          type: "setActiveCategory",
+          payload: location.state.categoryIndex,
+        });
+      }
+    }
+  }, [isLoadingAllVideos, isLoadingCategories]);
 
   const showTitle = (title) => {
     if (title.length <= 40) {
@@ -59,25 +80,80 @@ export const VideoListingScreen = () => {
         // add to watch later
         addToWatchLater(video);
       }
-      //   if (!isAddingToCart) {
-      //     setSelectedProduct(product._id);
-      //   } else if (cartData) {
-      //     setSelectedProduct(null);
-      //   }
     } else {
-      navigate("/auth");
+      setShowDialogue(true);
     }
   };
+  const createPlaylistHandler = (item) => {
+    if (isAuthenticated()) {
+      setSelectedVideo(item);
+      setShowModal(true);
+    } else {
+      setShowDialogue(true);
+    }
+  };
+  let filteredData = [];
+  if (!isLoadingCategories && categoriesData) {
+    filteredData = globalState.videos.filter((video) => {
+      let activeCategories = [];
+      globalState.activeCategories.forEach((item, idx) => {
+        if (item === true) {
+          activeCategories.push(globalState.categories[idx].categoryName);
+        }
+      });
+      if (activeCategories.length === 0) {
+        return video;
+      }
+      return activeCategories.indexOf(video.categoryName) > -1;
+    });
+  }
 
   return (
     <div className="video-screen-container">
-      <div className="pill-container">
-        <small className="pill grey pill-bordered">party</small>
+      <div className="pill-container mb-20">
+        {!isLoadingCategories &&
+          categoriesData &&
+          categoriesData.categories.map((item, idx) => (
+            <small
+              key={item._id}
+              className={`pill grey pointer ${
+                globalState.activeCategories[idx] === true
+                  ? "pill-bordered"
+                  : ""
+              }`}
+              onClick={() =>
+                globalDispatch({
+                  type: "setActiveCategory",
+                  payload: idx,
+                })
+              }
+            >
+              {item.categoryName}
+            </small>
+          ))}
       </div>
+      {showModal && (
+        <PlaylistModal
+          onClose={() => setShowModal(false)}
+          selectedVideo={selectedVideo}
+          showModal={showModal}
+          setShowModal={setShowModal}
+        />
+      )}
+      {showDialogue && (
+        <BasicDialogue
+          title="You Need to Sign in First"
+          subtitle="You need to sign in to avail all services"
+          rightActionButtonText="OK"
+          rightActionButtonOnClick={() => navigate("/auth")}
+          leftActionButtonText="Cancel"
+          leftActionButtonOnClick={() => setShowDialogue(false)}
+        />
+      )}
       <div className="video-listing-container">
-        {!loading &&
-          data &&
-          data.videos.map((item) => {
+        {!isLoadingAllVideos &&
+          allVideosData &&
+          filteredData.map((item) => {
             return (
               <VideoCard
                 key={item._id}
@@ -85,9 +161,9 @@ export const VideoListingScreen = () => {
                 title={showTitle(item.title)}
                 creator={item.creator}
                 onClick={() => addToHistoryHandler(item)}
-                onCreatePlaylist={() => console.log("on create playlist")}
+                onCreatePlaylist={() => createPlaylistHandler(item)}
                 onSave={() => toggleSaveToWatchLater(item)}
-                isSaved={true}
+                isSaved={checkDb(globalState.watchLater, item._id)}
               />
             );
           })}
