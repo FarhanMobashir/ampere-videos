@@ -45,9 +45,6 @@ export const buildHooks = (queryArray, baseQuery, dispatchFn) => {
     let hookName = `use${item.name}`;
 
     let useQuery = (urlParams = "") => {
-      // const [loading, setLoading] = React.useState(true);
-      // const [error, setError] = React.useState(false);
-      // const [data, setData] = React.useState(null);
       // using the reducer pattern
       const reducer = (state, action) => {
         if (action.type === "IS_LOADING") {
@@ -75,14 +72,11 @@ export const buildHooks = (queryArray, baseQuery, dispatchFn) => {
       const [state, dispatch] = React.useReducer(reducer, initialState);
       React.useEffect(() => {
         let componentMounted = false;
-        // setLoading(true);
         baseQuery(`${item.query}/${urlParams}`)
           .then((res) => {
             return res.json();
           })
           .then((data) => {
-            // setData(data);
-            // setLoading(false);
             if (!componentMounted) {
               dispatch({ type: "HAS_DATA", payload: data });
               dispatch({ type: "IS_LOADING", payload: false });
@@ -90,8 +84,6 @@ export const buildHooks = (queryArray, baseQuery, dispatchFn) => {
             }
           })
           .catch((err) => {
-            // setLoading(false);
-            // setError(err);
             dispatch({ type: "IS_LOADING", payload: false });
             dispatch({ type: "HAS_ERROR", payload: err });
           });

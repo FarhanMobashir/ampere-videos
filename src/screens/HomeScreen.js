@@ -1,8 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { RoundImageCard } from "../components/RoundImageCard";
+import { useApi } from "../contexts/ApiContext";
+import { useData } from "../contexts/DataContext";
 
 export const HomeScreen = () => {
+  const { usegetAllCategories } = useApi();
+  const { state: globalState } = useData();
+  const { loading: isLoadingAllCategories } = usegetAllCategories();
   return (
     <div id="main">
       <div className="hero-section">
@@ -12,7 +17,7 @@ export const HomeScreen = () => {
             We bring the most authentic and trending videos to give you full
             entertainment and information
           </p>
-          <Link to="/auth" className="btn btn-primary btn-lg">
+          <Link to="/videos" className="btn btn-primary btn-lg">
             WATCH NOW
           </Link>
         </div>
@@ -21,59 +26,18 @@ export const HomeScreen = () => {
       <div className="offer-section">
         <h2 className="h2 tx-center m-20 p-20 black-6">Categories</h2>
         <div className="offer-container">
-          {[1, 2, 3, 4].map((item, idx) => {
+          {globalState.categories.map((item, idx) => {
             return (
-              <Link key={item} to="/videos">
+              <Link key={item._id} to="/videos" state={{ categoryIndex: idx }}>
                 <RoundImageCard
-                  key={item.id}
+                  key={item.categoryName}
                   imageUrl="https://via.placeholder.com/150"
-                  title={"Categories"}
+                  title={item.categoryName}
                   onClick={() => console.log("Clicked")}
                 />
               </Link>
             );
           })}
-        </div>
-      </div>
-      <div className="feature-section">
-        <h2 className="h2 tx-center m-20 p-20 black-6">Why Us ?</h2>
-        <div className="feature-cards-container">
-          <div className="feature-card">
-            <i className="uil uil-shield-check feature-icon"></i>
-            <h3 className="feature-card-heading">Fully Secure</h3>
-            <p className="feature-card-subheading">
-              Shopping with us ensure full security for our customer
-            </p>
-          </div>
-
-          <div className="feature-card">
-            <i className="uil uil-gift feature-icon"></i>
-            <h3 className="feature-card-heading">Amazing Offers</h3>
-            <p className="feature-card-subheading">
-              Shopping with us ensure full security for our customer
-            </p>
-          </div>
-          <div className="feature-card">
-            <i className="uil uil-truck feature-icon"></i>
-            <h3 className="feature-card-heading">Ontime Shipment</h3>
-            <p className="feature-card-subheading">
-              Shopping with us ensure full security for our customer
-            </p>
-          </div>
-          <div className="feature-card">
-            <i className="uil uil-wallet feature-icon"></i>
-            <h3 className="feature-card-heading">Easy Payment</h3>
-            <p className="feature-card-subheading">
-              Shopping with us ensure full security for our customer
-            </p>
-          </div>
-          <div className="feature-card">
-            <i className="uil uil-phone-volume feature-icon"></i>
-            <h3 className="feature-card-heading">24*7 Support</h3>
-            <p className="feature-card-subheading">
-              Shopping with us ensure full security for our customer
-            </p>
-          </div>
         </div>
       </div>
     </div>

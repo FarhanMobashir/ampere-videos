@@ -25,11 +25,13 @@ export const VideoCard = ({
           <div class="icon-container">
             {/* <i class="uil uil-thumbs-up card-icon"></i> */}
             <i
-              class={`uil uil-bookmark card-icon ${isSaved ? "black-6" : null}`}
+              class={`uil uil-bookmark card-icon-video-card  ${
+                isSaved ? "card-icon-active-save" : ""
+              }`}
               onClick={onSave}
             ></i>
             <i
-              class="uil uil-create-dashboard card-icon"
+              class="uil uil-create-dashboard card-icon-video-card"
               onClick={onCreatePlaylist}
             ></i>
           </div>

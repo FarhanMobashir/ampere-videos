@@ -6,6 +6,8 @@ import { useData } from "../contexts/DataContext";
 import { useApi } from "../contexts/ApiContext";
 import { useAuth } from "../contexts/AuthContext";
 import { checkDb } from "../helpers/helperFuntions";
+import { PlaylistModal } from "../components/PlaylistModal";
+import { BasicDialogue } from "../components/BasicDialogue";
 export const VideoPlayerScreen = () => {
   const { videoid } = useParams();
   const { state } = useLocation();
@@ -17,12 +19,22 @@ export const VideoPlayerScreen = () => {
     usedeleteLikes,
     usegetAllVideos,
     useupdateWatchHistory,
+    useupdateWatchLater,
+    usedeleteWatchLater,
   } = useApi();
   const [addToLikedVideos, { loading: addingToLikedVideos }] = useupdateLikes();
   const [removeFromLikedVideos, { loading: removeingFromLikedVideos }] =
     usedeleteLikes();
   const { loading: videoIsLoading } = usegetAllVideos();
   const [addToHistory, { loading: addingToHistory }] = useupdateWatchHistory();
+  const [addToWatchLater, { loading: addingToWatchLater }] =
+    useupdateWatchLater();
+  const [deleteFromWatchLater, { loading: deletingFromWatchLater }] =
+    usedeleteWatchLater();
+
+  const [selectedVideo, setSelectedVideo] = React.useState(null);
+  const [showModal, setShowModal] = React.useState(false);
+  const [showDialogue, setShowDialogue] = React.useState(false);
 
   React.useEffect(() => {
     window.scrollTo(0, 0);
@@ -44,20 +56,63 @@ export const VideoPlayerScreen = () => {
         addToLikedVideos(video);
       }
     } else {
-      navigate("/auth");
+      setShowDialogue(true);
+    }
+  };
+
+  const toggleSaveToWatchLater = (video) => {
+    if (isAuthenticated()) {
+      if (checkDb(globalState.watchLater, video._id)) {
+        // remove from watch later
+        deleteFromWatchLater({}, video._id);
+      } else {
+        // add to watch later
+        addToWatchLater(video);
+      }
+    } else {
+      setShowDialogue(true);
+    }
+  };
+
+  const createPlaylistHandler = (item) => {
+    if (isAuthenticated()) {
+      setSelectedVideo(state.video);
+      setShowModal(true);
+    } else {
+      setShowDialogue(true);
     }
   };
 
   return (
     <div className="video-player-screen-container">
+      {showModal && (
+        <PlaylistModal
+          onClose={() => setShowModal(false)}
+          selectedVideo={selectedVideo}
+          showModal={showModal}
+          setShowModal={setShowModal}
+        />
+      )}
+      {showDialogue && (
+        <BasicDialogue
+          title="You Need to Sign in First"
+          subtitle="Do you want to sign in or keep watching ?"
+          rightActionButtonText="OK"
+          rightActionButtonOnClick={() => navigate("/auth")}
+          leftActionButtonText="Cancel"
+          leftActionButtonOnClick={() => setShowDialogue(false)}
+        />
+      )}
       <Youtube
         videoId={videoid}
         title={state.video.title}
         creator={state.video.creator}
         description={state.video.description}
         onLike={() => toggleLikeVideo(state.video)}
-        onSave={() => console.log("saved")}
-        onCreatePlaylist={() => console.log("create playlist modal")}
+        onSave={() => toggleSaveToWatchLater(state.video)}
+        onCreatePlaylist={() => createPlaylistHandler(state.video)}
+        isLiked={checkDb(globalState.likedVideos, state.video._id)}
+        isSaved={checkDb(globalState.watchLater, state.video._id)}
       />
       <div className="similar-video-container">
         <h1 className="h3 mb-10">Similar Videos</h1>
@@ -77,6 +132,8 @@ export const VideoPlayerScreen = () => {
               });
               window.scrollTo(0, 0);
             }}
+            onSave={() => toggleSaveToWatchLater(item)}
+            isSaved={checkDb(globalState.watchLater, item._id)}
           />
         ))}
       </div>

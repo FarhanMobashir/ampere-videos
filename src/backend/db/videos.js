@@ -99,7 +99,7 @@ export const videos = [
       "Peele Amiras- Lost & Found | Kabir Cafe Ft Shekhar Ravjiani | Sabr | 2021",
     description: "Keep Listening",
     creator: "Kabir Cafe Official",
-    categoryName: "Classical",
+    categoryName: "Classical Indian",
   },
   // * motivational
   {
