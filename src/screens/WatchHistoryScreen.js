@@ -4,7 +4,8 @@ import { VideoCardWithDelete } from "../components/VideoCardWithDelete";
 import { useApi } from "../contexts/ApiContext";
 import { useAuth } from "../contexts/AuthContext";
 import { useData } from "../contexts/DataContext";
-import emptyImage from "../assets/shoppingcart.png";
+import emptyImage from "../assets/emptyImage.svg";
+import { VideoLoader } from "../components/VideoLoader";
 
 export const WatchHistoryScreen = () => {
   const navigate = useNavigate();
@@ -15,7 +16,8 @@ export const WatchHistoryScreen = () => {
     usedeleteAllWatchHistory,
   } = useApi();
   const { isAuthenticated } = useAuth();
-  const { loading, data } = usegetWatchHistory();
+  const { loading: isLoadingWatchHistory, data: watchHistoryData } =
+    usegetWatchHistory();
   const [deleteFromHistory, { loading: isDeletingFromHistory }] =
     usedeleteWatchHistory();
   const [clearWatchHistory, { loading: isClearingHistory }] =
@@ -53,8 +55,8 @@ export const WatchHistoryScreen = () => {
         </small>
       </div>
       <div className="video-listing-container">
-        {!loading &&
-          data &&
+        {!isLoadingWatchHistory &&
+          watchHistoryData &&
           globalState.watchHistory.map((item) => {
             return (
               <VideoCardWithDelete
@@ -76,6 +78,7 @@ export const WatchHistoryScreen = () => {
               />
             );
           })}
+        {isLoadingWatchHistory && <VideoLoader />}
       </div>
     </div>
   );

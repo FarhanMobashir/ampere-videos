@@ -28,10 +28,15 @@ export const HomeScreen = () => {
         <div className="offer-container">
           {globalState.categories.map((item, idx) => {
             return (
-              <Link key={item._id} to="/videos" state={{ categoryIndex: idx }}>
+              <Link
+                style={{ textDecoration: "none" }}
+                key={item._id}
+                to="/videos"
+                state={{ categoryIndex: idx }}
+              >
                 <RoundImageCard
                   key={item.categoryName}
-                  imageUrl="https://via.placeholder.com/150"
+                  imageUrl={item.imageUrl}
                   title={item.categoryName}
                   onClick={() => console.log("Clicked")}
                 />

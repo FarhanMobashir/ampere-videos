@@ -40,9 +40,9 @@ export const VideoPlayerScreen = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  const similarVideo = globalState.videos.filter(
+  const similarVideo = globalState?.videos.filter(
     (item) =>
-      item.categoryName === state.video.categoryName &&
+      item.categoryName === state?.video.categoryName &&
       item.title !== state.video.title
   );
 
@@ -74,7 +74,7 @@ export const VideoPlayerScreen = () => {
     }
   };
 
-  const createPlaylistHandler = (item) => {
+  const createPlaylistHandler = () => {
     if (isAuthenticated()) {
       setSelectedVideo(state.video);
       setShowModal(true);
@@ -83,60 +83,65 @@ export const VideoPlayerScreen = () => {
     }
   };
 
-  return (
-    <div className="video-player-screen-container">
-      {showModal && (
-        <PlaylistModal
-          onClose={() => setShowModal(false)}
-          selectedVideo={selectedVideo}
-          showModal={showModal}
-          setShowModal={setShowModal}
-        />
-      )}
-      {showDialogue && (
-        <BasicDialogue
-          title="You Need to Sign in First"
-          subtitle="Do you want to sign in or keep watching ?"
-          rightActionButtonText="OK"
-          rightActionButtonOnClick={() => navigate("/auth")}
-          leftActionButtonText="Cancel"
-          leftActionButtonOnClick={() => setShowDialogue(false)}
-        />
-      )}
-      <Youtube
-        videoId={videoid}
-        title={state.video.title}
-        creator={state.video.creator}
-        description={state.video.description}
-        onLike={() => toggleLikeVideo(state.video)}
-        onSave={() => toggleSaveToWatchLater(state.video)}
-        onCreatePlaylist={() => createPlaylistHandler(state.video)}
-        isLiked={checkDb(globalState.likedVideos, state.video._id)}
-        isSaved={checkDb(globalState.watchLater, state.video._id)}
-      />
-      <div className="similar-video-container">
-        <h1 className="h3 mb-10">Similar Videos</h1>
-        {similarVideo.map((item) => (
-          <HorizontalVideoCard
-            key={item._id}
-            title={item.title}
-            creator={item.creator}
-            description={item.description}
-            videoId={item._id}
-            onClick={() => {
-              addToHistory(item);
-              navigate(`/videos/${item._id}`, {
-                state: {
-                  video: item,
-                },
-              });
-              window.scrollTo(0, 0);
-            }}
-            onSave={() => toggleSaveToWatchLater(item)}
-            isSaved={checkDb(globalState.watchLater, item._id)}
+  if (globalState.videos.find((item) => item._id === videoid) === undefined) {
+    return <h1>Page not found</h1>;
+  } else {
+    return (
+      <div className="video-player-screen-container">
+        {showModal && (
+          <PlaylistModal
+            onClose={() => setShowModal(false)}
+            selectedVideo={selectedVideo}
+            showModal={showModal}
+            setShowModal={setShowModal}
           />
-        ))}
+        )}
+        {showDialogue && (
+          <BasicDialogue
+            title="You Need to Sign in First"
+            subtitle="Do you want to sign in or keep watching ?"
+            rightActionButtonText="OK"
+            rightActionButtonOnClick={() => navigate("/auth")}
+            leftActionButtonText="Cancel"
+            leftActionButtonOnClick={() => setShowDialogue(false)}
+          />
+        )}
+        <Youtube
+          videoId={videoid}
+          title={state.video.title}
+          creator={state.video.creator}
+          description={state.video.description}
+          onLike={() => toggleLikeVideo(state.video)}
+          onSave={() => toggleSaveToWatchLater(state.video)}
+          onCreatePlaylist={() => createPlaylistHandler()}
+          isLiked={checkDb(globalState.likedVideos, state.video._id)}
+          isSaved={checkDb(globalState.watchLater, state.video._id)}
+        />
+        <div className="similar-video-container">
+          <h1 className="h3 mb-10">Similar Videos</h1>
+          {similarVideo.map((item) => (
+            <HorizontalVideoCard
+              key={item._id}
+              title={item.title}
+              creator={item.creator}
+              description={item.description}
+              videoId={item._id}
+              onClick={() => {
+                addToHistory(item);
+                navigate(`/videos/${item._id}`, {
+                  state: {
+                    video: item,
+                  },
+                });
+                window.scrollTo(0, 0);
+              }}
+              onSave={() => toggleSaveToWatchLater(item)}
+              isSaved={checkDb(globalState.watchLater, item._id)}
+              onCreatePlaylist={() => createPlaylistHandler(state.video)}
+            />
+          ))}
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 };

@@ -269,9 +269,59 @@
   width: 28rem;
 }
 
+.pill-container {
+  display: flex;
+  justify-content: flex-start;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
 /* category pill */
 .pill-bordered {
   border: 2px solid var(--black-500);
+}
+
+/* skeleton css */
+
+/* skeleton css */
+.skeleton-container {
+  border-radius: 1rem;
+  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.skeleton-circle {
+  padding: 5rem;
+  background-color: var(--black-100);
+  border-radius: 50%;
+}
+
+.skeleton-item-image {
+  padding: 1rem;
+  background-color: var(--black-000);
+  height: 20rem;
+  border-radius: var(--radius-sm);
+}
+
+.skeleton-item-button {
+  padding: 1rem;
+  /* background-color: var(--black-000); */
+  height: 5rem;
+  border-radius: var(--radius-sm);
+}
+
+.skeleton {
+  animation: skeleton-loading 1s linear infinite alternate;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-color: var(--black-100);
+  }
+  100% {
+    background-color: var(--black-000);
+  }
 }
 
 @media (max-width: 600px) {
@@ -352,7 +402,7 @@
 }
 
 .empty-state-image {
-  width: 250px;
+  width: auto;
   height: 250px;
   object-fit: cover;
   border-radius: var(--radius-sm);
@@ -415,6 +465,11 @@
   border: 1px solid var(--black-200);
   padding: 4rem 2rem;
 }
+
+.playlist-title-container {
+  flex-basis: 80%;
+}
+
 .playlist-card:hover {
   background-color: var(--black-000);
 }

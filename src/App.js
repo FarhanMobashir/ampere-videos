@@ -14,6 +14,8 @@ import { PrivateRoute } from "./components/PrivateRoute";
 import { DataProvider } from "./contexts/DataContext";
 import { ApiProvider } from "./contexts/ApiContext";
 import { LikedVideoScreen } from "./screens/LikedVideoScreen";
+import errorImage from "./assets/emptyImage.svg";
+import { EmptyState } from "./components/EmptyState";
 
 function App() {
   return (
@@ -23,7 +25,19 @@ function App() {
           <Routes>
             {/* public routes  */}
             <Route path="/" element={<AppLayout />}>
-              <Route path="*" exact element={<h1>404 not found</h1>} />
+              <Route
+                path="*"
+                exact
+                element={
+                  <EmptyState
+                    title="404 Error : Page Not found"
+                    description="This is not where you should be"
+                    onButtonClick={() => navigate("/videos")}
+                    buttonText="Watch Videos"
+                    imageUrl={errorImage}
+                  />
+                }
+              />
               <Route path="/" element={<HomeScreen />} />
               <Route path="/mock" element={<Mockman />} />
               <Route path="/auth" element={<AuthScreen />} />
