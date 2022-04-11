@@ -7,6 +7,7 @@ import React from "react";
 import { useData } from "../contexts/DataContext";
 import { PlaylistModal } from "../components/PlaylistModal";
 import { BasicDialogue } from "../components/BasicDialogue";
+import { VideoLoader } from "../components/VideoLoader";
 
 export const VideoListingScreen = () => {
   const {
@@ -167,6 +168,7 @@ export const VideoListingScreen = () => {
               />
             );
           })}
+        {isLoadingAllVideos && <VideoLoader />}
       </div>
     </div>
   );

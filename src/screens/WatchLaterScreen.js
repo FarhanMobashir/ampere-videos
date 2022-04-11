@@ -4,7 +4,8 @@ import { VideoCardWithDelete } from "../components/VideoCardWithDelete";
 import { useApi } from "../contexts/ApiContext";
 import { useAuth } from "../contexts/AuthContext";
 import { useData } from "../contexts/DataContext";
-import emptyImage from "../assets/shoppingcart.png";
+import emptyImage from "../assets/girlsitting.svg";
+import { VideoLoader } from "../components/VideoLoader";
 
 export const WatchLaterScreen = () => {
   const navigate = useNavigate();
@@ -65,6 +66,7 @@ export const WatchLaterScreen = () => {
               />
             );
           })}
+        {isLoadingWatchLater && <VideoLoader />}
       </div>
     </div>
   );

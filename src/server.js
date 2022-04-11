@@ -80,7 +80,7 @@ export function makeServer({ environment = "development" } = {}) {
       this.post("/auth/login", loginHandler.bind(this));
 
       // video routes (public)
-      this.get("/videos", getAllVideosHandler.bind(this));
+      this.get("/videos", getAllVideosHandler.bind(this), { timing: 2000 });
       this.get("video/:videoId", getVideoHandler.bind(this));
 
       // TODO: POST VIDEO TO DB
@@ -90,12 +90,16 @@ export function makeServer({ environment = "development" } = {}) {
       this.get("/categories/:categoryId", getCategoryHandler.bind(this));
 
       // likes routes (private)
-      this.get("/user/likes", getLikedVideosHandler.bind(this));
+      this.get("/user/likes", getLikedVideosHandler.bind(this), {
+        timing: 2000,
+      });
       this.post("/user/likes", addItemToLikedVideos.bind(this));
       this.delete("/user/likes/:videoId", removeItemFromLikedVideos.bind(this));
 
       // watch later routes (private)
-      this.get("/user/watchlater", getWatchLaterVideosHandler.bind(this));
+      this.get("/user/watchlater", getWatchLaterVideosHandler.bind(this), {
+        timing: 2000,
+      });
       this.post("/user/watchlater", addItemToWatchLaterVideos.bind(this));
       this.delete(
         "/user/watchlater/:videoId",
@@ -112,7 +116,8 @@ export function makeServer({ environment = "development" } = {}) {
 
       this.get(
         "/user/playlists/:playlistId",
-        getVideosFromPlaylistHandler.bind(this)
+        getVideosFromPlaylistHandler.bind(this),
+        { timing: 2000 }
       );
       this.post(
         "/user/playlists/:playlistId",
@@ -124,7 +129,9 @@ export function makeServer({ environment = "development" } = {}) {
       );
 
       // history routes (private)
-      this.get("/user/history", getHistoryVideosHandler.bind(this));
+      this.get("/user/history", getHistoryVideosHandler.bind(this), {
+        timing: 2000,
+      });
       this.post("/user/history", addVideoToHistoryHandler.bind(this));
       this.delete(
         "/user/history/:videoId",

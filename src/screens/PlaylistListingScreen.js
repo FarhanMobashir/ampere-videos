@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useApi } from "../contexts/ApiContext";
 import { useData } from "../contexts/DataContext";
-import emptyImage from "../assets/shoppingcart.png";
+import emptyImage from "../assets/emptyImage.svg";
 import { EmptyState } from "../components/EmptyState";
 
 export const PlaylistListingScreen = () => {
@@ -14,9 +14,10 @@ export const PlaylistListingScreen = () => {
   const PlaylistListingCard = ({ onDelete, onClick, title }) => {
     return (
       <div className="playlist-card">
-        <h4 className="h4 black-6 pointer" onClick={onClick}>
-          {title}
-        </h4>
+        <div className="playlist-title-container pointer" onClick={onClick}>
+          <h4 className="h4 black-6 ">{title}</h4>
+        </div>
+
         <i
           className="uil uil-trash-alt tx-24 black-6 pointer"
           onClick={onDelete}
